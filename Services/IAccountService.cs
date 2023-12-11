@@ -4,7 +4,9 @@ namespace DatingApp.Services;
 
 public interface IAccountService
 {
-    void AddAccount(Account account);
+    Task<Account> AddAccount(Account account);
 
-    Account GetAccountById(int id);
+    Task<Account> GetAccountById(int id);
+
+    Task<bool> AccountIsValid(string username, string password);
 }

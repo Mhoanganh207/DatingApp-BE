@@ -1,9 +1,10 @@
 using DatingApp.Data;
 using DatingApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Repository;
 
-public class AccountRepository
+public class AccountRepository : IAccountRepository
 {
     private readonly AppDbContext _db ;
 
@@ -12,23 +13,39 @@ public class AccountRepository
         this._db = db;
     }
 
-    public void Add(Account account)
+
+    public async Task<Account> Register(Account account)
     {
-        _db.Accounts.Add(account);
-        _db.SaveChanges();
+        var pass = BCrypt.Net.BCrypt.HashPassword(account.Password);
+        account.Password = pass;
+        await _db.Accounts.AddAsync(account);
+        await _db.SaveChangesAsync();
+
+        return account;
     }
 
-    public Account GetById(int id)
+    public async Task<Account> GetById(int id)
     {
-        var account = _db.Accounts.Find(id);
+        var account = await _db.Accounts.FindAsync(id);
+
         if (account == null)
         {
-            throw new NullReferenceException("Cannot find account");
+            throw new NullReferenceException("No account");
         }
-        else
-        {
-            return account;
-        }
+       
+        return account;
     }
 
+    public async Task<bool> LogIn(string username, string password)
+    {
+        var account = await _db.Accounts.FirstOrDefaultAsync(acc => acc.Username == username);
+        
+        if (account == null)
+            return false;
+        
+        if (!BCrypt.Net.BCrypt.Verify(password, account.Password))
+            return false;
+        
+        return true;
+    }
 }
