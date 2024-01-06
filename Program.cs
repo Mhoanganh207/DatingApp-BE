@@ -13,12 +13,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: datingAppFe,
-        policy  =>
-        {
-            policy.WithOrigins("http://localhost:5000");
-        })
-        ;
+    options.AddPolicy("AllowSpecificOrigin", build =>
+    {
+        build.WithOrigins("http://localhost:5000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -45,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(datingAppFe);
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

@@ -9,17 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/ChatBotController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/LoginDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Repository/IAccountRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatingApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DatingApp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IAccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/ServiceImp/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +33,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.DatingApp: http.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -52,13 +44,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Inspections-C#",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "/home/hoanganh/.config/JetBrains/Rider2023.2/resharper-host/DecompilerCache",
-      "/home/hoanganh/.config/JetBrains/Rider2023.2/resharper-host/SourcesCache",
+      "/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
+      "/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/SourcesCache",
       "/home/hoanganh/.local/share/Symbols/src"
     ]
   }
@@ -108,6 +100,12 @@
       <workItem from="1702215153020" duration="4455000" />
       <workItem from="1702219622163" duration="3942000" />
       <workItem from="1702276346849" duration="1927000" />
+      <workItem from="1702290341159" duration="134000" />
+      <workItem from="1702439663535" duration="2584000" />
+      <workItem from="1702464451297" duration="1823000" />
+      <workItem from="1702522675172" duration="1354000" />
+      <workItem from="1703580858511" duration="98000" />
+      <workItem from="1704513588409" duration="241000" />
     </task>
     <servers />
   </component>
