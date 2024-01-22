@@ -25,4 +25,13 @@ public class AccountService : IAccountService
     {
         return _accountRepository.LogIn(username, password);
     }
+
+    public Task<Account> UpdateAvatar(Account account)
+    {
+        return _accountRepository.UpdateAvatar(account);
+    }
+    public Task<Account> GetAccountByEmail(string email)
+    {
+        return _accountRepository.GetAccountByEmail(email);
+    }
 }

@@ -48,4 +48,32 @@ public class AccountRepository : IAccountRepository
         
         return true;
     }
+
+    public async Task<Account> UpdateAvatar(Account account)
+    {
+        try
+        {
+            var acc = await this.GetById(account.Id);
+                acc.Avatar = account.Avatar;
+                await this._db.SaveChangesAsync();
+                return acc;
+        }
+        catch
+        {
+            throw new Exception("Error occured");
+        }
+    }
+
+    public async Task<Account> GetAccountByEmail(string email)
+    {
+        var account = await _db.Accounts.FirstOrDefaultAsync(account1 => account1.Email == email);
+        if (account != null)
+        {
+            return account;
+        }
+        else
+        {
+            throw new Exception("No account");
+        }
+    }
 }

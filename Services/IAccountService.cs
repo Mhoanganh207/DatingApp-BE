@@ -9,4 +9,8 @@ public interface IAccountService
     Task<Account> GetAccountById(int id);
 
     Task<bool> AccountIsValid(string username, string password);
+
+    Task<Account> UpdateAvatar(Account account);
+
+    Task<Account> GetAccountByEmail(string email);
 }

@@ -9,18 +9,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Migrations/20240122040919_1.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240122040919_1.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240122041532_2.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240122041532_2.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ChatBotController.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/DatingApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DatingApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Account.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IAccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,13 +44,15 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dotnet-watch.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;dotnet-watch.run.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CSharpParameterNameHintsOptions&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -65,7 +63,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.DatingApp: http">
+  <component name="RunManager" selected="dotnet-watch.run">
     <configuration name="DatingApp: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/DatingApp.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -96,6 +94,19 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="run" type="RunDotNetWatch" factoryName="RunDotNetWatch">
+      <option name="exePath" value="$PROJECT_DIR$/bin/Debug/net8.0/DatingApp" />
+      <option name="programParameters" value="" />
+      <option name="projectFilePath" value="$PROJECT_DIR$/DatingApp.csproj" />
+      <option name="projectTfm" value="net8.0" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.DatingApp: http" />
+      <item itemvalue=".NET Launch Settings Profile.DatingApp: https" />
+      <item itemvalue="dotnet-watch.run" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -119,7 +130,10 @@
       <workItem from="1704513873397" duration="66000" />
       <workItem from="1705659608423" duration="149000" />
       <workItem from="1705850375099" duration="1468000" />
-      <workItem from="1705896377004" duration="2942000" />
+      <workItem from="1705896377004" duration="6808000" />
+      <workItem from="1705911292512" duration="3474000" />
+      <workItem from="1705915141616" duration="438000" />
+      <workItem from="1705940245093" duration="1796000" />
     </task>
     <servers />
   </component>
