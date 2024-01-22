@@ -36,9 +36,9 @@ public class AccountRepository : IAccountRepository
         return account;
     }
 
-    public async Task<bool> LogIn(string username, string password)
+    public async Task<bool> LogIn(string email, string password)
     {
-        var account = await _db.Accounts.FirstOrDefaultAsync(acc => acc.Username == username);
+        var account = await _db.Accounts.FirstOrDefaultAsync(acc => acc.Email == email);
         
         if (account == null)
             return false;

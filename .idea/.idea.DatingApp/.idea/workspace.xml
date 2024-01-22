@@ -9,8 +9,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Migrations/20240122040919_1.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240122040919_1.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240122041532_2.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240122041532_2.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ChatBotController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatingApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DatingApp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Account.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,30 +41,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.DatingApp: http.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.DatingApp: http.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
-      "/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/SourcesCache",
-      "/home/hoanganh/.local/share/Symbols/src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/DecompilerCache&quot;,
+      &quot;/home/hoanganh/.config/JetBrains/Rider2023.3/resharper-host/SourcesCache&quot;,
+      &quot;/home/hoanganh/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.DatingApp: http">
     <configuration name="DatingApp: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/DatingApp.csproj" />
@@ -106,6 +116,10 @@
       <workItem from="1702522675172" duration="1354000" />
       <workItem from="1703580858511" duration="98000" />
       <workItem from="1704513588409" duration="241000" />
+      <workItem from="1704513873397" duration="66000" />
+      <workItem from="1705659608423" duration="149000" />
+      <workItem from="1705850375099" duration="1468000" />
+      <workItem from="1705896377004" duration="2942000" />
     </task>
     <servers />
   </component>

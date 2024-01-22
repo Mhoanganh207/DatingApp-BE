@@ -27,6 +27,7 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<Account> RegisterAccount(Account account)
     {
+        Console.WriteLine(account);
         return await _accountService.AddAccount(account);
     }
 
