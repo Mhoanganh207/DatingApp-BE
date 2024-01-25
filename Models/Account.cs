@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.JavaScript;
+
 
 namespace DatingApp.Models;
 
@@ -18,5 +17,6 @@ public class Account
     // true is male, false is female
     public bool Gender { get; set; }
     public string? Avatar { get; set; }
-    
+    public string? Interest { get; set; }
+    public string? Introduction { get; set; }
 }

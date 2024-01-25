@@ -1,7 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
-using System.Text;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -9,7 +6,6 @@ using DatingApp.Models;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Account = DatingApp.Models.Account;
 
 namespace DatingApp.Controllers;
@@ -20,7 +16,6 @@ namespace DatingApp.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
-    private readonly IConfiguration _configuration;
     private readonly AmazonS3Client _amazonS3 = new AmazonS3Client(
         "AKIA6AN5YLBFDZKIKPDA",
         "TipoLMZcA4gVLZim9tngRcp1AEkX5fqa+f1mhF3o",
@@ -28,11 +23,9 @@ public class AccountController : ControllerBase
         );
   
 
-    public AccountController(IAccountService accountService, IConfiguration configuration)
+    public AccountController(IAccountService accountService)
     {
         this._accountService = accountService;
-        this._configuration = configuration;
-       
     }
 
     [AllowAnonymous]
@@ -55,26 +48,11 @@ public class AccountController : ControllerBase
         var auth = await _accountService.AccountIsValid(loginDto.Username, loginDto.Password);
         if (!auth)
             return Unauthorized();
-
-        var clamis = new[]
-        {
-            new Claim(ClaimTypes.Name, loginDto.Username)
-        };
-        string? secretkey = _configuration.GetSection("AppSettings:Token").Value;
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(secretkey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(clamis),
-            Expires = DateTime.Now.AddDays(1),
-            SigningCredentials = creds
-        };
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
+        
+        var jwtToken = _accountService.GenerateToken(loginDto.Username);
         return Ok(new
         {
-            token = tokenHandler.WriteToken(token)
+            token = jwtToken
         });
 
 
@@ -90,21 +68,32 @@ public class AccountController : ControllerBase
         {
             BucketName = "lovelink",
             InputStream = file.OpenReadStream(),
-            Key = file.FileName,
+            Key = file.FileName + account.Email,
             ContentType = file.ContentType
         };
         try
         {
             var result = await _amazonS3.PutObjectAsync(request);
-            await this._accountService.UpdateAvatar(account);
-            return Ok(result);
-
+            await this._accountService.UpdateAccount(account);
+            return Ok(_accountService.GenerateToken(account.Email));
         }
         catch (AmazonS3Exception e)
         {
             throw new AmazonS3Exception(e.Message);
         }
         
+    }
+
+    [AllowAnonymous]
+    [HttpPut("{id}/info")]
+    public async Task<IActionResult> updateInfor(int id,InforDto inforDto)
+    {
+        var account = await _accountService.GetAccountById(id);
+        account.Interest = inforDto.Interested;
+        account.Introduction = inforDto.Introduction;
+        await _accountService.UpdateAccount(account);
+
+        return StatusCode(200);
     }
 
     [Authorize]
@@ -121,7 +110,7 @@ public class AccountController : ControllerBase
         {
             BucketName = "lovelink",
             Key = account.Avatar,
-            Expires = DateTime.Now.AddMinutes(1)
+            Expires = DateTime.Now.AddDays(7)
         });
         return Ok(imageUrl.Result);
     }

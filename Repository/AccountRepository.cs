@@ -49,7 +49,7 @@ public class AccountRepository : IAccountRepository
         return true;
     }
 
-    public async Task<Account> UpdateAvatar(Account account)
+    public async Task<Account> UpdateAccount(Account account)
     {
         try
         {

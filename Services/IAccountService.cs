@@ -10,7 +10,9 @@ public interface IAccountService
 
     Task<bool> AccountIsValid(string username, string password);
 
-    Task<Account> UpdateAvatar(Account account);
+    Task<Account> UpdateAccount(Account account);
 
     Task<Account> GetAccountByEmail(string email);
+
+    string GenerateToken(string email);
 }
