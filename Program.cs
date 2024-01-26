@@ -21,7 +21,9 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IFavouriteService, FavouriteService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

@@ -9,19 +9,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dto/InforDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dto/UserDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240124085134_3.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240124085134_3.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240124103441_4.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20240124103441_4.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240126094813_5.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240126094813_5.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Favourite.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/UserConnection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/ChatService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/FavouriteService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/IFavouriteService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatingApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DatingApp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dto/UserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dto/UserDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Account.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/LoginDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dto/LoginDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/IAccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/IAccountRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AccountService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/IAccountService.cs" afterDir="false" />
     </list>
@@ -59,7 +62,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CSharpParameterNameHintsOptions&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -145,7 +148,13 @@
       <workItem from="1706083014941" duration="5252000" />
       <workItem from="1706091858519" duration="1814000" />
       <workItem from="1706102017009" duration="1775000" />
-      <workItem from="1706157624541" duration="653000" />
+      <workItem from="1706157624541" duration="864000" />
+      <workItem from="1706165117923" duration="832000" />
+      <workItem from="1706193038592" duration="3139000" />
+      <workItem from="1706261025450" duration="1307000" />
+      <workItem from="1706262351604" duration="3393000" />
+      <workItem from="1706273855782" duration="3941000" />
+      <workItem from="1706278438525" duration="3194000" />
     </task>
     <servers />
   </component>

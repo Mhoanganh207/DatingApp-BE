@@ -6,6 +6,7 @@ public interface IAccountRepository
 {
     Task<Account> Register(Account account);
     Task<Account> GetById(int id);
-    Task<bool> LogIn(string username, string password);
+    Task<Account> LogIn(string username, string password);
+    Task<string> AddToFavouriteList(int id1, int id2);
 
 }

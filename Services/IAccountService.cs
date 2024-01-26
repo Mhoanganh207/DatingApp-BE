@@ -8,11 +8,13 @@ public interface IAccountService
 
     Task<Account> GetAccountById(int id);
 
-    Task<bool> AccountIsValid(string username, string password);
+    Task<Account> AccountIsValid(string username, string password);
 
     Task<Account> UpdateAccount(Account account);
 
     Task<Account> GetAccountByEmail(string email);
 
-    string GenerateToken(string email);
+    string GenerateToken(string email,int id);
+
+    Task<List<Account>> RetrieveUser(int id,int page);
 }

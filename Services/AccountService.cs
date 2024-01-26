@@ -31,7 +31,7 @@ public class AccountService : IAccountService
         return _accountRepository.GetById(id);
     }
 
-    public Task<bool> AccountIsValid(string username, string password)
+    public Task<Account> AccountIsValid(string username, string password)
     {
         return _accountRepository.LogIn(username, password);
     }
@@ -45,11 +45,12 @@ public class AccountService : IAccountService
         return _accountRepository.GetAccountByEmail(email);
     }
 
-    public string GenerateToken(string email)
+    public string GenerateToken(string email,int id)
     {
         var clamis = new[]
         {
-            new Claim(ClaimTypes.Name, email)
+            new Claim(ClaimTypes.Name, email),
+            new Claim(ClaimTypes.NameIdentifier, id.ToString())
         };
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(this._secretkey));
@@ -65,5 +66,10 @@ public class AccountService : IAccountService
         var jwt =  tokenHandler.WriteToken(token); 
 
         return jwt;
+    }
+
+    public async Task<List<Account>> RetrieveUser(int id,int page)
+    {
+        return await _accountRepository.GetUser(id,page);
     }
 }

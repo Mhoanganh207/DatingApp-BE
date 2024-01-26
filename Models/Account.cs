@@ -19,4 +19,6 @@ public class Account
     public string? Avatar { get; set; }
     public string? Interest { get; set; }
     public string? Introduction { get; set; }
+    
+    public ICollection<Favourite> Favourites { get; set; }
 }
