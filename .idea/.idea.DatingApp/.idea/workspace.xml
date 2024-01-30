@@ -8,7 +8,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="" />
+    <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Controllers/ChatController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dto/ChatDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dto/MessageDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hubs/ChatHub.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127070048_6.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127070048_6.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127071244_7.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127071244_7.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127141347_8.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Migrations/20240127141347_8.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/AccountChat.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Chat.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Message.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repository/ChatRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/IChatService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Account.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/IAccountRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/ChatService.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,7 +160,15 @@
       <workItem from="1706261025450" duration="1307000" />
       <workItem from="1706262351604" duration="3393000" />
       <workItem from="1706273855782" duration="3941000" />
-      <workItem from="1706278438525" duration="3815000" />
+      <workItem from="1706278438525" duration="4324000" />
+      <workItem from="1706320967878" duration="746000" />
+      <workItem from="1706327527477" duration="9054000" />
+      <workItem from="1706347814866" duration="742000" />
+      <workItem from="1706363240378" duration="4607000" />
+      <workItem from="1706406393937" duration="1102000" />
+      <workItem from="1706409430132" duration="544000" />
+      <workItem from="1706432719009" duration="53000" />
+      <workItem from="1706522641396" duration="10615000" />
     </task>
     <servers />
   </component>

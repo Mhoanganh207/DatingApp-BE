@@ -37,10 +37,11 @@ public class AccountController : ControllerBase
         return await _accountService.AddAccount(account);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
-    public async Task<Account> GetAccountById(int id)
+    public async Task<UserDto> GetAccountById(int id)
     {
-        return await _accountService.GetAccountById(id);
+        return new UserDto(await _accountService.GetAccountById(id));
     }
 
     [AllowAnonymous]
@@ -179,6 +180,14 @@ public class AccountController : ControllerBase
         var account =await _accountService.GetAccountByEmail(email);
         await _favouriteService.AddFavouriteList(account.Id, id);
         return Ok();
+    }
+    
+    [Authorize]
+    [HttpGet("info")]
+    public async Task<UserDto> GetFavouriteList()
+    {
+        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return new UserDto(await _accountService.GetAccountById(int.Parse(id)));
     }
     
     

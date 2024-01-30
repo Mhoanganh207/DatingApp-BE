@@ -1,5 +1,6 @@
 using System.Text;
 using DatingApp.Data;
+using DatingApp.Hubs;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,15 +16,18 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", build =>
     {
-        build.WithOrigins("http://localhost:5173")
+        build
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithOrigins("http://localhost:5173");
     });
 });
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IFavouriteService, FavouriteService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -50,4 +54,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
+
 app.Run();

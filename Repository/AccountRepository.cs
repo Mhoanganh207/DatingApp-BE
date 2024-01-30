@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Repository;
 
-public class AccountRepository : IAccountRepository
+public class AccountRepository
 {
     private readonly AppDbContext _db ;
 

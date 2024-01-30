@@ -20,5 +20,8 @@ public class Account
     public string? Interest { get; set; }
     public string? Introduction { get; set; }
     
-    public ICollection<Favourite> Favourites { get; set; }
+    public ICollection<Message> SentMessages { get; set; } = new List<Message>();
+    public ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
+    public ICollection<Chat> Chats { get; set; } = new List<Chat>();
+    public ICollection<AccountChat> AccountChats { get; set; } = new List<AccountChat>();
 }
