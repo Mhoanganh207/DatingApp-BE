@@ -18,8 +18,8 @@ public class AccountController : ControllerBase
     private readonly IAccountService _accountService;
     private readonly IFavouriteService _favouriteService;
     private readonly AmazonS3Client _amazonS3 = new AmazonS3Client(
-        "AKIA6AN5YLBFDZKIKPDA",
-        "TipoLMZcA4gVLZim9tngRcp1AEkX5fqa+f1mhF3o",
+        "AKIA6AN5YLBFDPIEKUWH",
+        "1K/cgwYCdWrbirQQd8YPW1Ei2r5hlg8JTqx8SkZm",
         RegionEndpoint.APSoutheast2
         );
   
@@ -104,7 +104,6 @@ public class AccountController : ControllerBase
         return StatusCode(200);
     }
 
-    [Authorize]
     [HttpGet("avatar")]
     public async Task<IActionResult> GetAvatar()
     {
@@ -152,7 +151,6 @@ public class AccountController : ControllerBase
         return StatusCode(500);
     }
 
-    [Authorize]
     [HttpGet("all/{page}")]
     public async Task<List<UserDto>> RetrieveUser(int page)
     {
@@ -166,7 +164,7 @@ public class AccountController : ControllerBase
         return userList;
     }
 
-    [Authorize]
+
     [HttpGet("favourite/{id}")]
     public async Task<IActionResult> AddToFavouriteList(int id)
     {
@@ -182,7 +180,6 @@ public class AccountController : ControllerBase
         return Ok();
     }
     
-    [Authorize]
     [HttpGet("info")]
     public async Task<UserDto> GetFavouriteList()
     {
