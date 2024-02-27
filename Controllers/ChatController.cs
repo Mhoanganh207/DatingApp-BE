@@ -13,11 +13,13 @@ namespace DatingApp.Controllers;
 public class ChatController : ControllerBase
 {
     private readonly IChatService _chatService;
+    private readonly IFavouriteService _favouriteService;
    
 
-    public ChatController(IChatService chatService)
+    public ChatController(IChatService chatService, IFavouriteService favouriteService)
     {
         _chatService = chatService;
+        _favouriteService = favouriteService;
         
     }
 
@@ -28,6 +30,7 @@ public class ChatController : ControllerBase
         var id1 = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var id2 = messageDto.ReceiveId;
         var message = messageDto.Content;
+        await _favouriteService.AddFavouriteList(id1,id2);
         return await _chatService.CreateChat(id1, id2, message);
     }
 
