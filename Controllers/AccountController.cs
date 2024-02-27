@@ -44,27 +44,6 @@ public class AccountController : ControllerBase
         return new UserDto(await _accountService.GetAccountById(id));
     }
 
-    [AllowAnonymous]
-    [HttpPost("login")]
-    public async Task<IActionResult> AuthenticateAccount(LoginDto loginDto)
-    {
-        try
-        {
-            var auth = await _accountService.AccountIsValid(loginDto.Username, loginDto.Password);
-            var jwtToken = _accountService.GenerateToken(loginDto.Username,auth.Id);
-            return Ok(new
-            {
-                token = jwtToken
-            });
-        }
-        catch (NullReferenceException e)
-        {
-            return Unauthorized();
-        }
-      
-
-
-    }
  
     [AllowAnonymous]
     [HttpPost("{id}/avatar")]
@@ -83,7 +62,12 @@ public class AccountController : ControllerBase
         {
             var result = await _amazonS3.PutObjectAsync(request);
             await this._accountService.UpdateAccount(account);
-            return Ok(_accountService.GenerateToken(account.Email,account.Id));
+            var token = _accountService.GenerateToken(account.Email,account.Id,86400);
+            var refreshtoken = _accountService.GenerateToken(account.Email,account.Id,604800);
+            return Ok(new {
+                token = token,
+                refreshtoken = refreshtoken
+            });
         }
         catch (AmazonS3Exception e)
         {
@@ -152,23 +136,25 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("all/{page}")]
-    public async Task<List<UserDto>> RetrieveUser(int page)
+    public async Task<IActionResult> RetrieveUser(int page)
     {
-        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;   
+        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (id == null){
+            return Unauthorized();
+        }   
         List<UserDto> userList = new List<UserDto>();
         foreach (var user in await _accountService.RetrieveUser(int.Parse(id), page)) 
         {
             userList.Add(new UserDto(user));
         }
 
-        return userList;
+        return Ok(userList);
     }
 
 
     [HttpGet("favourite/{id}")]
     public async Task<IActionResult> AddToFavouriteList(int id)
     {
-        Console.WriteLine(id);
         var email = User.FindFirst(ClaimTypes.Name)?.Value;
         if (email == null)
         {

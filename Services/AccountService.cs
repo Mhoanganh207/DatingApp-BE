@@ -45,7 +45,7 @@ public class AccountService : IAccountService
         return _accountRepository.GetAccountByEmail(email);
     }
 
-    public string GenerateToken(string email,int id)
+    public string GenerateToken(string email,int id,int time)
     {
         var clamis = new[]
         {
@@ -58,7 +58,7 @@ public class AccountService : IAccountService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(clamis),
-            Expires = DateTime.Now.AddDays(1),
+            Expires = DateTime.Now.AddSeconds(time),
             SigningCredentials = creds
         };
         var tokenHandler = new JwtSecurityTokenHandler();

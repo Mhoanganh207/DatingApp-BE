@@ -14,7 +14,7 @@ public interface IAccountService
 
     Task<Account> GetAccountByEmail(string email);
 
-    string GenerateToken(string email,int id);
+    string GenerateToken(string email,int id,int time);
 
     Task<List<Account>> RetrieveUser(int id,int page);
 }
