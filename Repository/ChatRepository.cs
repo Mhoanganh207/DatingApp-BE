@@ -26,27 +26,31 @@ public class ChatRepository
     
     public async Task<List<ChatDto>> GetChatsById(int id)
     {
-        var sqlQuery = @"
-          SELECT b.*
-          FROM AccountChats AS a
-          JOIN AccountChats AS b ON a.ChatId = b.ChatId AND a.AccountId != b.AccountId
-          WHERE a.AccountId = {0}";
+        var chats = await (from a in _db.AccountChats
+             join b in _db.AccountChats on a.ChatId equals b.ChatId
+             join c in _db.Chats on a.ChatId equals c.Id
+             where a.AccountId == id && a.AccountId != b.AccountId
+             select new ChatDto
+             {
+                 ChatId = b.ChatId,
+                 AccountId = b.AccountId,
+                 LastMessageId = c.LastMessageId
+             }).OrderByDescending(c => c.LastMessageId).ToListAsync();
 
-        var chats = _db.AccountChats
-            .FromSqlRaw(sqlQuery, id)
-            .ToList();
-
-        var accounts = new List<ChatDto>();
-        foreach (var ac in chats)
-        {
-          accounts.Add(new ChatDto(ac.AccountId, ac.ChatId));
-        }
-       
         
-        return accounts;
+        foreach (var chat in chats)
+        {
+            var message = await _db.Messages.FirstOrDefaultAsync(m => m.Id == chat.LastMessageId);
+            chat.LastMessage = new
+            {
+                message.SentId,
+                message.Content
+            };
+        }
+        return chats;
     }
     
-    public async Task<IActionResult> CreateChat(int id1, int id2, string message)
+    public async Task<IActionResult> CreateChat(int id1, int id2, string msg)
     {
         
         var account1 = await _db.Accounts.FindAsync(id1);
@@ -56,16 +60,22 @@ public class ChatRepository
             throw new Exception("No account found");
         }
         var chat = new Chat();
-        var message1 = new Message();
+    
         chat.Accounts.Add(account1);
         chat.Accounts.Add(account2);
-        message1.Sent = account1;
-        message1.Content = message;
-        message1.Chat = chat;
-        message1.CreatedAt = DateTime.Now;
-        
+
+        var message = new Message
+        {
+            Sent = account1,
+            Content = msg,
+            Chat = chat,
+            CreatedAt = DateTime.Now
+        };
+
         await _db.Chats.AddAsync(chat);
-        await _db.Messages.AddAsync(message1);
+        await _db.Messages.AddAsync(message);
+        await _db.SaveChangesAsync();
+        chat.LastMessageId = message.Id;
         await _db.SaveChangesAsync();
         return new OkResult();
     }
@@ -84,14 +94,20 @@ public class ChatRepository
     
     public async Task<Message> CreateMessage(MessageDto msg)
     {
-        var message1 = new Message();
-        message1.SentId = msg.SendId;
-        message1.Content = msg.Content;
-        message1.CreatedAt = DateTime.Now;
-        message1.ChatId = msg.ChatId;
-        await _db.Messages.AddAsync(message1);
+        var message = new Message
+        {
+            SentId = msg.SendId,
+            Content = msg.Content,
+            CreatedAt = DateTime.Now,
+            ChatId = msg.ChatId
+        };
+        await _db.Messages.AddAsync(message);
         await _db.SaveChangesAsync();
-        return message1;
+
+        var chat = await _db.Chats.FirstOrDefaultAsync(c => c.Id == msg.ChatId);
+        chat.LastMessageId = message.Id;
+        await _db.SaveChangesAsync();
+        return message;
     }
 
     

@@ -4,10 +4,10 @@ public class ChatDto
 {
   public int AccountId { get; set; }
   public int ChatId { get; set; }
-  
-  public ChatDto(int account, int chatId)
-  {
-    AccountId = account;
-    ChatId = chatId;
-  }
+
+  public long LastMessageId { get; set; }
+
+  public Object LastMessage { get; set; }
+
+
 }
