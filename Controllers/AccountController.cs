@@ -6,6 +6,7 @@ using DatingApp.Models;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Account = DatingApp.Models.Account;
 
 namespace DatingApp.Controllers;
@@ -78,7 +79,7 @@ public class AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPut("{id}/info")]
-    public async Task<IActionResult> updateInfor(int id,InforDto inforDto)
+    public async Task<IActionResult> UpdateInfor(int id,InforDto inforDto)
     {
         var account = await _accountService.GetAccountById(id);
         account.Interest = inforDto.Interested;
@@ -114,26 +115,39 @@ public class AccountController : ControllerBase
     [HttpGet("{id}/avatar")]
     public async Task<IActionResult> GetAvatarById(int id)
     {
-        
-        var account = await this._accountService.GetAccountById(id);
-        var imageUrl = this._amazonS3.GetPreSignedURLAsync(new GetPreSignedUrlRequest()
+        var account = await _accountService.GetAccountById(id);
+        var imageUrl = await _amazonS3.GetPreSignedURLAsync(new GetPreSignedUrlRequest()
         {
             BucketName = "lovelink",
             Key = account.Avatar,
             Expires = DateTime.Now.AddDays(7)
         });
-        var client = new HttpClient();
-        HttpResponseMessage response = await client.GetAsync(imageUrl.Result);
-        
-        if (response.IsSuccessStatusCode)
+
+        using (var client = new HttpClient())
         {
-            string contentType = response.Content.Headers.ContentType?.MediaType;
-            byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
-            return File(imageBytes, contentType);
+            var response = await client.GetAsync(imageUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                var imageBytes = await response.Content.ReadAsByteArrayAsync();
+                if(contentType == null)
+                {
+                    return StatusCode(500);
+                }
+                var fileResult = new FileContentResult(imageBytes, contentType)
+                {
+                    FileDownloadName = account.Avatar
+                };
+                Response.Headers["Cache-Control"] = "public, max-age=604800"; 
+
+                return fileResult;
+            }
         }
 
         return StatusCode(500);
     }
+
 
     [HttpGet("all/{page}")]
     public async Task<IActionResult> RetrieveUser(int page)
@@ -142,7 +156,7 @@ public class AccountController : ControllerBase
         if (id == null){
             return Unauthorized();
         }   
-        List<UserDto> userList = new List<UserDto>();
+        List<UserDto> userList = [];
         foreach (var user in await _accountService.RetrieveUser(int.Parse(id), page)) 
         {
             userList.Add(new UserDto(user));
@@ -167,10 +181,14 @@ public class AccountController : ControllerBase
     }
     
     [HttpGet("info")]
-    public async Task<UserDto> GetFavouriteList()
+    public async Task<IActionResult> GetFavouriteList()
     {
         var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return new UserDto(await _accountService.GetAccountById(int.Parse(id)));
+        if (id == null)
+        {
+            return Unauthorized();
+        }
+        return Ok(new UserDto(await _accountService.GetAccountById(int.Parse(id))));
     }
     
     

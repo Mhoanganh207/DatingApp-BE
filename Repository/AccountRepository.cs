@@ -82,14 +82,14 @@ public class AccountRepository
     }
     public async Task<List<Account>> GetUser(int id,int page)
     {
-        var favouriteList = _db.Accounts.Where(account => account.Id == id).Join(_db.Favourites,
+        var favouriteList = await _db.Accounts.Where(account => account.Id == id).Join(_db.Favourites,
             a => a.Id,
             f => f.AccountId,
             (a, f) => new
             {
                 Id = f.FavoriteAccountId
             }
-        ).ToList();
+        ).ToListAsync();
         return _db.Accounts.Skip((page-1)*10).Take(10).ToList().Where(
             account => !favouriteList.Exists(fav => fav.Id == account.Id) && account.Id != id).ToList();
     }

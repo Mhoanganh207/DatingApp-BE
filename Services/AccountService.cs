@@ -18,7 +18,7 @@ public class AccountService : IAccountService
     public AccountService(IConfiguration configuration)
     {
         this._configuration = configuration;
-        this._secretkey = _configuration.GetSection("AppSettings:Token").Value;
+        this._secretkey = _configuration.GetSection("AppSettings:Token")?.Value ?? string.Empty;
     }
    
     public Task<Account> AddAccount(Account account)

@@ -4,6 +4,7 @@ using DatingApp.Hubs;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,11 +24,17 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5173");
     });
 });
+builder.Services.AddScoped<IDatabase>(provider =>
+{
+    var redis = provider.GetService<ConnectionMultiplexer>();
+    return redis.GetDatabase();
+});
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IFavouriteService, FavouriteService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
