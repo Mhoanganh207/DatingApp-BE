@@ -9,15 +9,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f769f977-a22e-4b78-9c40-41f85c2b65b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Services/CacheService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/ICacheService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DatingApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ChatController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ChatController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatingApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DatingApp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repository/AccountRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/AccountRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/ChatRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/ChatRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +154,8 @@
       <workItem from="1709026671068" duration="338000" />
       <workItem from="1709133114290" duration="693000" />
       <workItem from="1709299272309" duration="271000" />
-      <workItem from="1709301893115" duration="771000" />
+      <workItem from="1709301893115" duration="1106000" />
+      <workItem from="1709388655053" duration="249000" />
     </task>
     <servers />
   </component>

@@ -43,8 +43,8 @@ public class ChatRepository
             var message = await _db.Messages.FirstOrDefaultAsync(m => m.Id == chat.LastMessageId);
             chat.LastMessage = new
             {
-                message.SentId,
-                message.Content
+               sentId = message.SentId,
+               content = message.Content
             };
         }
         return chats;

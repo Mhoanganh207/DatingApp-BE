@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddScoped<IDatabase>(provider =>
 {
-    var redis = provider.GetService<ConnectionMultiplexer>();
+    var redis = ConnectionMultiplexer.Connect("localhost:6379");
     return redis.GetDatabase();
 });
 builder.Services.AddDbContext<AppDbContext>();
