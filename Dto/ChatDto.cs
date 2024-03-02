@@ -9,5 +9,4 @@ public class ChatDto
 
   public Object LastMessage { get; set; }
 
-
 }

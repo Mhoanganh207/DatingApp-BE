@@ -45,6 +45,7 @@ public class ChatController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetChatsById()
     {
+
         var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (idClaim == null)
         {
@@ -60,7 +61,6 @@ public class ChatController : ControllerBase
                 CurrentAccountId = id
             });
         }
-
         var chatList = await _chatService.GetChatsById(id);
         _cacheService.SetData("chats", chatList, DateTimeOffset.Now.AddSeconds(30));
         return Ok(new
