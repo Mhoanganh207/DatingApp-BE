@@ -53,7 +53,7 @@ public class AccountService : IAccountService
             new Claim(ClaimTypes.NameIdentifier, id.ToString())
         };
         var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(this._secretkey));
+            Encoding.UTF8.GetBytes(_secretkey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         var tokenDescriptor = new SecurityTokenDescriptor
         {

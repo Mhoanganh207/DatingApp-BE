@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 
-
 var builder = WebApplication.CreateBuilder(args);
-var datingAppFe = "_DatingAppFe";
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -21,9 +20,11 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
-            .WithOrigins("http://localhost:5173");
+            .WithOrigins("http://localhost:5173")
+            .WithHeaders("Authorization");
     });
 });
+
 builder.Services.AddScoped<IDatabase>(provider =>
 {
     var redis = ConnectionMultiplexer.Connect("localhost:6379");
@@ -35,10 +36,11 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IFavouriteService, FavouriteService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ICacheService, CacheService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var secretKey = builder.Configuration.GetSection("Appsettings:Token").Value;
+        var secretKey = builder.Configuration.GetSection("Appsettings:Token")?.Value ?? string.Empty;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -48,8 +50,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
+        options.Events = new JwtBearerEvents
+    {
+        OnChallenge = async context =>
+        {
+            context.HandleResponse();
+
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsync("Token expired");
+        }
+    };
     });
-    
 
 var app = builder.Build();
 
@@ -60,8 +71,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin"); // Placed before MapControllers and MapHub
 app.MapControllers();
 app.MapHub<ChatHub>("/chathub");
 

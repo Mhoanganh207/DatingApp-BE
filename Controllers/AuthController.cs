@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
         try
         {
             var auth = await _accountService.AccountIsValid(loginDto.Username, loginDto.Password);
-            var jwtToken = _accountService.GenerateToken(loginDto.Username, auth.Id, 3600);
+            var jwtToken = _accountService.GenerateToken(loginDto.Username, auth.Id, 7200);
             var refreshToken = _accountService.GenerateToken(loginDto.Username, auth.Id, 604800);
             return Ok(new
             {
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        var jwtToken = _accountService.GenerateToken(username, Int32.Parse(id), 3600);
+        var jwtToken = _accountService.GenerateToken(username, Int32.Parse(id), 7200);
         var refreshToken = _accountService.GenerateToken(username, Int32.Parse(id), 604800);
         return Ok(new
         {

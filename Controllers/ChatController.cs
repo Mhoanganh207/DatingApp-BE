@@ -14,14 +14,12 @@ public class ChatController : ControllerBase
 {
     private readonly IChatService _chatService;
     private readonly IFavouriteService _favouriteService;
-    private readonly ICacheService _cacheService;
 
 
-    public ChatController(IChatService chatService, IFavouriteService favouriteService, ICacheService cacheService)
+    public ChatController(IChatService chatService, IFavouriteService favouriteService)
     {
         _chatService = chatService;
         _favouriteService = favouriteService;
-        _cacheService = cacheService;
     }
     
 
@@ -52,17 +50,7 @@ public class ChatController : ControllerBase
             return Unauthorized();
         }
         var id = int.Parse(idClaim.Value);
-        var data = _cacheService.GetData<List<ChatDto>>("chats");
-        if (data != null)
-        {
-            return Ok(new
-            {
-                ChatList = data,
-                CurrentAccountId = id
-            });
-        }
         var chatList = await _chatService.GetChatsById(id);
-        _cacheService.SetData("chats", chatList, DateTimeOffset.Now.AddSeconds(30));
         return Ok(new
         {
             ChatList = chatList,

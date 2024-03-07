@@ -18,6 +18,8 @@ public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
     private readonly IFavouriteService _favouriteService;
+
+    private readonly ICacheService _cacheService;
     private readonly AmazonS3Client _amazonS3 = new AmazonS3Client(
         "AKIA6AN5YLBFDPIEKUWH",
         "1K/cgwYCdWrbirQQd8YPW1Ei2r5hlg8JTqx8SkZm",
@@ -25,10 +27,11 @@ public class AccountController : ControllerBase
         );
   
 
-    public AccountController(IAccountService accountService,IFavouriteService favouriteService)
+    public AccountController(IAccountService accountService,IFavouriteService favouriteService,ICacheService cacheService)
     {
         this._accountService = accountService;
         this._favouriteService = favouriteService;
+        this._cacheService = cacheService;
     }
 
     [AllowAnonymous]
@@ -62,8 +65,8 @@ public class AccountController : ControllerBase
         try
         {
             var result = await _amazonS3.PutObjectAsync(request);
-            await this._accountService.UpdateAccount(account);
-            var token = _accountService.GenerateToken(account.Email,account.Id,86400);
+            await _accountService.UpdateAccount(account);
+            var token = _accountService.GenerateToken(account.Email,account.Id,7200);
             var refreshtoken = _accountService.GenerateToken(account.Email,account.Id,604800);
             return Ok(new {
                 token = token,
@@ -139,7 +142,7 @@ public class AccountController : ControllerBase
                 {
                     FileDownloadName = account.Avatar
                 };
-                Response.Headers["Cache-Control"] = "public, max-age=604800"; 
+                Response.Headers["Cache-Control"] = "public, max-age=7200"; 
 
                 return fileResult;
             }
@@ -154,7 +157,7 @@ public class AccountController : ControllerBase
     {
         var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (id == null){
-            return Unauthorized();
+            return Unauthorized(401);
         }   
         List<UserDto> userList = [];
         foreach (var user in await _accountService.RetrieveUser(int.Parse(id), page)) 
@@ -181,14 +184,21 @@ public class AccountController : ControllerBase
     }
     
     [HttpGet("info")]
-    public async Task<IActionResult> GetFavouriteList()
+    public async Task<IActionResult> GetInfo()
     {
         var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (id == null)
         {
             return Unauthorized();
         }
-        return Ok(new UserDto(await _accountService.GetAccountById(int.Parse(id))));
+        var data = _cacheService.GetData<UserDto>("info");
+        if (data != null)
+        {
+            return Ok(data);
+        }
+        var userData = new UserDto(await _accountService.GetAccountById(int.Parse(id)));
+        _cacheService.SetData("info", userData, DateTimeOffset.Now.AddSeconds(30));
+        return Ok(userData);
     }
     
     

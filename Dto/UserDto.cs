@@ -10,6 +10,10 @@ public class UserDto
     public string Interest { get; set; }
     public string Introduction { get; set; }
     
+    public UserDto(){
+        
+    }
+    
 
     public UserDto(Account account)
     {
