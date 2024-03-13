@@ -1,6 +1,6 @@
  <header>
         <h1>Dating App with .NET</h1>
-        <p>Welcome to our Dating App built with .NET!</p>
+        <p>Welcome to my Dating App built with .NET!</p>
     </header>
     <section>
         <h2>Features</h2>
