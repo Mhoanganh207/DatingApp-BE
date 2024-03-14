@@ -25,6 +25,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> AuthenticateAccount(LoginDto loginDto)
     {
+        Console.WriteLine(loginDto.Username);
         try
         {
             var auth = await _accountService.AccountIsValid(loginDto.Username, loginDto.Password);

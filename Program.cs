@@ -17,16 +17,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin", build =>
-    {
-        build
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials()
-            .WithOrigins("http://localhost:5173","http://localhost:7700");
-    });
-});
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder =>
+                {
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:5173");
+                });
+        });
 
 builder.Services.AddScoped<IDatabase>(provider =>
 {
@@ -54,15 +56,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
         options.Events = new JwtBearerEvents
-    {
-        OnChallenge = async context =>
         {
-            context.HandleResponse();
+            OnChallenge = async context =>
+            {
+                context.HandleResponse();
 
-            context.Response.StatusCode = 401;
-            await context.Response.WriteAsync("Token expired");
-        }
-    };
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Token expired");
+            }
+        };
     });
 
 var app = builder.Build();
@@ -75,23 +77,24 @@ if (app.Environment.IsDevelopment())
 }
 
 //Meiliesearch set up;
- MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-var services = app.Services.CreateScope().ServiceProvider;
 
-var context = services.GetRequiredService<AppDbContext>();
-var accountList = await context.Accounts.Include(acc => acc.Hobbies).ToListAsync();
-var list = accountList.ConvertAll(acc => new UserDto(acc));
-var index= client.Index("accounts");
-await index.AddDocumentsAsync<UserDto>(list);
 
 
 app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin"); // Placed before MapControllers and MapHub
 app.MapControllers();
 app.MapHub<ChatHub>("/chathub");
+MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
+var options = new JsonSerializerOptions
+{
+    PropertyNameCaseInsensitive = true
+};
+var services = app.Services.CreateScope().ServiceProvider;
+
+var context = services.GetRequiredService<AppDbContext>();
+var accountList = await context.Accounts.Include(acc => acc.Hobbies).ToListAsync();
+var list = accountList.ConvertAll(acc => new UserDto(acc));
+var index = client.Index("accounts");
+await index.AddDocumentsAsync<UserDto>(list);
 
 app.Run();
