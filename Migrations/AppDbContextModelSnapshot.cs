@@ -22,6 +22,21 @@ namespace DatingApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AccountHobby", b =>
+                {
+                    b.Property<int>("AccountsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HobbiesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccountsId", "HobbiesId");
+
+                    b.HasIndex("HobbiesId");
+
+                    b.ToTable("AccountHobbies", (string)null);
+                });
+
             modelBuilder.Entity("DatingApp.Models.Account", b =>
                 {
                     b.Property<int>("Id")
@@ -46,9 +61,6 @@ namespace DatingApp.Migrations
 
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Interest")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
@@ -120,6 +132,23 @@ namespace DatingApp.Migrations
                     b.ToTable("Favourites");
                 });
 
+            modelBuilder.Entity("DatingApp.Models.Hobby", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hobby");
+                });
+
             modelBuilder.Entity("DatingApp.Models.Message", b =>
                 {
                     b.Property<long>("Id")
@@ -148,6 +177,21 @@ namespace DatingApp.Migrations
                     b.HasIndex("SentId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("AccountHobby", b =>
+                {
+                    b.HasOne("DatingApp.Models.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatingApp.Models.Hobby", null)
+                        .WithMany()
+                        .HasForeignKey("HobbiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DatingApp.Models.AccountChat", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240127070048_6")]
-    partial class _6
+    [Migration("20240314081459_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace DatingApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AccountHobby", b =>
+                {
+                    b.Property<int>("AccountsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HobbiesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccountsId", "HobbiesId");
+
+                    b.HasIndex("HobbiesId");
+
+                    b.ToTable("AccountHobbies", (string)null);
+                });
 
             modelBuilder.Entity("DatingApp.Models.Account", b =>
                 {
@@ -81,7 +96,7 @@ namespace DatingApp.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.ToTable("AccountChat");
+                    b.ToTable("AccountChats");
                 });
 
             modelBuilder.Entity("DatingApp.Models.Chat", b =>
@@ -91,6 +106,9 @@ namespace DatingApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("LastMessageId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -118,6 +136,23 @@ namespace DatingApp.Migrations
                     b.HasIndex("FavoriteAccountId");
 
                     b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("DatingApp.Models.Hobby", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hobby");
                 });
 
             modelBuilder.Entity("DatingApp.Models.Message", b =>
@@ -148,6 +183,21 @@ namespace DatingApp.Migrations
                     b.HasIndex("SentId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("AccountHobby", b =>
+                {
+                    b.HasOne("DatingApp.Models.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatingApp.Models.Hobby", null)
+                        .WithMany()
+                        .HasForeignKey("HobbiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DatingApp.Models.AccountChat", b =>

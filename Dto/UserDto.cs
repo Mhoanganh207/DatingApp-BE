@@ -7,8 +7,9 @@ public class UserDto
     public string Surname { get; set; }
     public int Age { get; set; }
     public string Avatar { get; set; }
-    public string Interest { get; set; }
     public string Introduction { get; set; }
+
+    public ICollection<Hobby> Hobbies { get; set; } = new List<Hobby>();
     
     public UserDto(){
         
@@ -21,7 +22,7 @@ public class UserDto
         this.Firstname = account.Firstname;
         this.Surname = account.Surname;
         this.Age = DateTime.Now.Year - account.BirthDate.Year;
-        this.Interest = account.Interest;
+        this.Hobbies = account.Hobbies;
         this.Introduction = account.Introduction;
         this.Avatar = account.Avatar;
     }

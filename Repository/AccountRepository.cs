@@ -59,11 +59,14 @@ public class AccountRepository
         {
             var acc = await this.GetById(account.Id);
                 acc.Avatar = account.Avatar;
+                acc.Introduction = account.Introduction;
+                acc.Hobbies = account.Hobbies;
                 await this._db.SaveChangesAsync();
                 return acc;
         }
-        catch
+        catch(Exception e)
         {
+            Console.WriteLine(e);
             throw new Exception("Error occured");
         }
     }
@@ -90,7 +93,7 @@ public class AccountRepository
                 Id = f.FavoriteAccountId
             }
         ).ToListAsync();
-        return _db.Accounts.Skip((page-1)*10).Take(10).ToList().Where(
+        return _db.Accounts.Include(account => account.Hobbies).Skip((page-1)*10).Take(10).ToList().Where(
             account => !favouriteList.Exists(fav => fav.Id == account.Id) && account.Id != id).ToList();
     }
 

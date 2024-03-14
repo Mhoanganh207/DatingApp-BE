@@ -1,8 +1,12 @@
 using System.Text;
+using System.Text.Json;
 using DatingApp.Data;
 using DatingApp.Hubs;
+using DatingApp.Models;
 using DatingApp.Services;
+using Meilisearch;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 
@@ -20,8 +24,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
-            .WithOrigins("http://localhost:5173")
-            .WithHeaders("Authorization");
+            .WithOrigins("http://localhost:5173","http://localhost:7700");
     });
 });
 
@@ -70,6 +73,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//Meiliesearch set up;
+ MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+var services = app.Services.CreateScope().ServiceProvider;
+
+var context = services.GetRequiredService<AppDbContext>();
+var accountList = await context.Accounts.Include(acc => acc.Hobbies).ToListAsync();
+var list = accountList.ConvertAll(acc => new UserDto(acc));
+var index= client.Index("accounts");
+await index.AddDocumentsAsync<UserDto>(list);
+
 
 app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin"); // Placed before MapControllers and MapHub

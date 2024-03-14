@@ -11,7 +11,7 @@ namespace DatingApp.Services;
 
 public class AccountService : IAccountService
 {
-    private readonly AccountRepository _accountRepository = new AccountRepository(new AppDbContext());
+    private readonly AccountRepository _accountRepository = new(new AppDbContext());
     private readonly string _secretkey;
     private readonly IConfiguration _configuration;
 

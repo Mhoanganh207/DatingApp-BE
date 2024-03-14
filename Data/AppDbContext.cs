@@ -51,6 +51,12 @@ public class AppDbContext :DbContext
             .HasOne(m => m.Sent)
             .WithMany(s => s.SentMessages)
             .HasForeignKey(m => m.SentId);
+
+        modelBuilder.Entity<Account>()
+        .HasMany(a => a.Hobbies)
+        .WithMany(h => h.Accounts)
+        .UsingEntity(j => j.ToTable("AccountHobbies"))
+        ;
         
             
         
