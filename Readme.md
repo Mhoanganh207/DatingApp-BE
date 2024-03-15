@@ -8,7 +8,7 @@
             <li>User Authentication: Register, login, and manage your account securely.</li>
             <li>Profile Creation: Build your dating profile with details such as photos, bio, and preferences.</li>
             <li>Chat Functionality: Communicate with matches through private messaging.</li>
-            <li>Search Functionality: Search for users based on various criteria like age, location, interests, etc.</li>
+            <li>Search Functionality: Search for users based on various criteria like age,interests, etc.</li>
         </ul>
     </section>
     <section>

@@ -17,6 +17,9 @@ public class Account
     // true is male, false is female
     public bool Gender { get; set; }
     public string? Avatar { get; set; }
+
+    public string? Address { get; set; }
+
     public string? Introduction { get; set; }
     
     public ICollection<Message> SentMessages { get; set; } = new List<Message>();

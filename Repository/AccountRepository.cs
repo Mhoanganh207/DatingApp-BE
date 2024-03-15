@@ -61,6 +61,9 @@ public class AccountRepository
                 acc.Avatar = account.Avatar;
                 acc.Introduction = account.Introduction;
                 acc.Hobbies = account.Hobbies;
+                acc.Address = account.Address;
+                acc.Firstname = account.Firstname;
+                acc.Surname = account.Surname;
                 await this._db.SaveChangesAsync();
                 return acc;
         }

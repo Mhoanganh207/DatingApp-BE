@@ -30,9 +30,9 @@ public class AccountController : ControllerBase
         "1K/cgwYCdWrbirQQd8YPW1Ei2r5hlg8JTqx8SkZm",
         RegionEndpoint.APSoutheast1
         );
-  
 
-    public AccountController(IAccountService accountService,IFavouriteService favouriteService,ICacheService cacheService)
+
+    public AccountController(IAccountService accountService, IFavouriteService favouriteService, ICacheService cacheService)
     {
         this._accountService = accountService;
         this._favouriteService = favouriteService;
@@ -53,13 +53,13 @@ public class AccountController : ControllerBase
         return new UserDto(await _accountService.GetAccountById(id));
     }
 
- 
+
     [AllowAnonymous]
     [HttpPost("{id}/avatar")]
-    public async Task<IActionResult> PostAvatar(int id,IFormFile file)
+    public async Task<IActionResult> PostAvatar(int id, IFormFile file)
     {
         var account = await this._accountService.GetAccountById(id);
-        account.Avatar = file.FileName+account.Email;
+        account.Avatar = file.FileName + account.Email;
         var request = new PutObjectRequest()
         {
             BucketName = _bucketName,
@@ -71,9 +71,10 @@ public class AccountController : ControllerBase
         {
             var result = await _amazonS3.PutObjectAsync(request);
             await _accountService.UpdateAccount(account);
-            var token = _accountService.GenerateToken(account.Email,account.Id,7200);
-            var refreshtoken = _accountService.GenerateToken(account.Email,account.Id,604800);
-            return Ok(new {
+            var token = _accountService.GenerateToken(account.Email, account.Id, 7200);
+            var refreshtoken = _accountService.GenerateToken(account.Email, account.Id, 604800);
+            return Ok(new
+            {
                 token = token,
                 refreshtoken = refreshtoken
             });
@@ -82,21 +83,62 @@ public class AccountController : ControllerBase
         {
             throw new AmazonS3Exception(e.Message);
         }
-        
+
+    }
+
+    [HttpPut("avatar")]
+    public async Task<IActionResult> UpdateAvatar(IFormFile file)
+    {
+        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (id == null)
+        {
+            return StatusCode(401);
+        }
+        var account = await this._accountService.GetAccountById(int.Parse(id));
+        account.Avatar = file.FileName + account.Email;
+    
+        var request = new PutObjectRequest()
+        {
+            BucketName = _bucketName,
+            InputStream = file.OpenReadStream(),
+            Key = file.FileName + account.Email,
+            ContentType = file.ContentType
+        };
+        try
+        {
+            var result = await _amazonS3.PutObjectAsync(request);
+
+            if (result.HttpStatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return StatusCode(500);
+            }
+            await _accountService.UpdateAccount(account);
+            var imageUrl = this._amazonS3.GetPreSignedURLAsync(new GetPreSignedUrlRequest()
+            {
+                BucketName = _bucketName,
+                Key = account.Avatar,
+                Expires = DateTime.Now.AddDays(7)
+            });
+            return Ok(imageUrl.Result);
+        }
+        catch (AmazonS3Exception e)
+        {
+            throw new AmazonS3Exception(e.Message);
+        }
+
     }
 
     [AllowAnonymous]
     [HttpPut("{id}/info")]
-    public async Task<IActionResult> UpdateInfor(int id,InforDto inforDto)
+    public async Task<IActionResult> UpdateInfor(int id, InforDto inforDto)
     {
-        Console.WriteLine(inforDto.Hobbies.ElementAt(0).Name);
         var account = await _accountService.GetAccountById(id);
         account.Hobbies = inforDto.Hobbies;
         account.Introduction = inforDto.Introduction;
         await _accountService.UpdateAccount(account);
 
         MeilisearchClient client = new MeilisearchClient("http://localhost:7700");
-        await client.Index("accounts").AddDocumentsAsync<UserDto>(new List<UserDto>(){new UserDto(account)});
+        await client.Index("accounts").AddDocumentsAsync<UserDto>(new List<UserDto>() { new UserDto(account) });
 
         return StatusCode(200);
     }
@@ -120,7 +162,7 @@ public class AccountController : ControllerBase
         return Ok(imageUrl.Result);
 
     }
-    
+
 
 
     [AllowAnonymous]
@@ -143,7 +185,7 @@ public class AccountController : ControllerBase
             {
                 var contentType = response.Content.Headers.ContentType?.MediaType;
                 var imageBytes = await response.Content.ReadAsByteArrayAsync();
-                if(contentType == null)
+                if (contentType == null)
                 {
                     return StatusCode(500);
                 }
@@ -151,7 +193,7 @@ public class AccountController : ControllerBase
                 {
                     FileDownloadName = account.Avatar
                 };
-                Response.Headers["Cache-Control"] = "public, max-age=7200"; 
+                Response.Headers["Cache-Control"] = "public, max-age=7200";
 
                 return fileResult;
             }
@@ -165,11 +207,12 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> RetrieveUser(int page)
     {
         var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (id == null){
+        if (id == null)
+        {
             return Unauthorized(401);
-        }   
+        }
         List<UserDto> userList = [];
-        foreach (var user in await _accountService.RetrieveUser(int.Parse(id), page)) 
+        foreach (var user in await _accountService.RetrieveUser(int.Parse(id), page))
         {
             userList.Add(new UserDto(user));
         }
@@ -187,11 +230,11 @@ public class AccountController : ControllerBase
             return StatusCode(401);
         }
 
-        var account =await _accountService.GetAccountByEmail(email);
+        var account = await _accountService.GetAccountByEmail(email);
         await _favouriteService.AddFavouriteList(account.Id, id);
         return Ok();
     }
-    
+
     [HttpGet("info")]
     public async Task<IActionResult> GetInfo()
     {
@@ -209,22 +252,47 @@ public class AccountController : ControllerBase
         _cacheService.SetData("info", userData, DateTimeOffset.Now.AddSeconds(30));
         return Ok(userData);
     }
-    
 
-    
+
+
     [HttpGet("search")]
     public async Task<IActionResult> SearchUser([FromQuery(Name = "q")] string query)
     {
         var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (id == null)
+        {
+            return Unauthorized();
+        }
         var client = new MeilisearchClient("http://localhost:7700");
         var index = client.Index("accounts");
         var result = await index.SearchAsync<UserDto>(query);
         var list = result.Hits.Where(hit => hit.Id != int.Parse(id)).ToList();
         return Ok(list);
     }
-    
-    
-    
-    
-    
+
+    [HttpPut("infor")]
+    public async Task<IActionResult> UpdateUserInformation(InforDto infor)
+    {
+        var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (id == null)
+        {
+            return Unauthorized();
+        }
+        var account = await _accountService.GetAccountById(int.Parse(id));
+        account.Introduction = infor.Introduction;
+        account.Address = infor.Address;
+        account.Firstname = infor.Firstname;
+        account.Surname = infor.Surname;
+        await _accountService.UpdateAccount(account);
+
+        MeilisearchClient client = new MeilisearchClient("http://localhost:7700");
+        await client.Index("accounts").AddDocumentsAsync<UserDto>(new List<UserDto>() { new UserDto(account) });
+
+        return Ok(infor);
+    }
+
+
+
+
+
 }
