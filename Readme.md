@@ -20,6 +20,8 @@
             <li>SQL Server: A relational database management system developed by Microsoft.</li>
             <li>SignalR: A library for adding real-time web functionality to .NET applications.</li>
             <li>AWS S3: A scalable cloud storage solution provided by Amazon Web Services.</li>
+            <li>Redis: An in-memory data structure store used as a caching layer.</li>
+            <li>MeiliSearch: A powerful, fast, and open-source search engine.</li>
         </ul>
     </section>
     <section>
